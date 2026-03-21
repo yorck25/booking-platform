@@ -1,0 +1,90 @@
+@use "../../styles/variables";
+
+.input_group {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-sm;
+  width: 100%;
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: variables.$secondary-font-color;
+  }
+
+  .error_message {
+    font-size: 12px;
+    color: variables.$red;
+    margin: 0;
+  }
+
+  input,
+  select,
+  .select {
+    width: 100%;
+    padding: 12px variables.$spacing-md;
+    border: 1px solid variables.$border-color;
+    border-radius: variables.$border-radius-medium;
+    font-size: 14px;
+    font-family: variables.$primary-font-family;
+    color: variables.$primary-font-color;
+    background: variables.$white;
+    transition: all variables.$transition-fast;
+
+    &::placeholder {
+      color: variables.$placeholder-font-color;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: variables.$highlight-purple;
+      box-shadow: 0 0 0 3px rgba(12, 140, 233, 0);
+    }
+
+    &:disabled {
+      background: variables.$gray-100;
+      cursor: not-allowed;
+    }
+  }
+
+  select,
+  .select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23777777' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right variables.$spacing-md center;
+    padding-right: variables.$spacing-xl;
+    cursor: pointer;
+
+    option {
+      color: variables.$primary-font-color;
+    }
+  }
+
+  &.inline_input {
+    flex-direction: row;
+    align-items: center;
+    gap: variables.$spacing-sm;
+
+    .inline_label {
+      font-size: 14px;
+      font-weight: 500;
+      color: variables.$primary-font-color;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: auto;
+      margin-right: variables.$spacing-xs;
+    }
+  }
+
+  &.has_error {
+    input,
+    select,
+    .select {
+      border-color: variables.$red;
+    }
+  }
+}
