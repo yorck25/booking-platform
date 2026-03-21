@@ -1,0 +1,58 @@
+// Imports
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+// Fonts
+$primary-font-family: "Inter", sans-serif;
+
+// Colors
+$white: #ffffff;
+$black: #000000;
+
+$primary-background-color: $white;
+$secondary-background: #f1f1f1;
+
+$primary-font-color: #1c1c1c;
+$secondary-font-color: #444444;
+$muted-font-color: #777777;
+$placeholder-font-color: #aaaaaa;
+
+$red: #e30119;
+$dark-red: #f6806d;
+$green: #2aac24;
+$orange: #efa70e;
+$highlight-blue: #0c8ce9;
+$highlight-purple: #daadff;
+$highlight-purple-light: rgba(218, 173, 255, 0.35);
+$highlight-purple-lighter: rgba(218, 173, 255, 0.20);
+
+$gray-100: #d5d5d5;
+$gray-200: #f1f3f5;
+$gray-300: #e9ecef;
+$gray-400: #dee2e6;
+$gray-500: #ced4da;
+$gray-600: #adb5bd;
+$gray-700: #868e96;
+$gray-800: #495057;
+$gray-900: #212529;
+
+$shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+$shadow-dark: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+//spacings
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 40px;
+
+//borders
+$border-color: $gray-400;
+$border-radius-small: 4px;
+$border-radius-medium: 8px;
+$border-radius-large: 12px;
+
+//transitions
+$transition-fast: 0.15s ease-in-out;
+$transition-medium: 0.3s ease-in-out;
+$transition-slow: 0.5s ease-in-out;

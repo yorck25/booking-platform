@@ -1,0 +1,42 @@
+@use "variables";
+
+@mixin mobile {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+
+@mixin widescreen {
+  @media (min-width: 1444px) {
+    @content;
+  }
+}
+
+@mixin fullhd {
+  @media (min-width: 2400px) {
+    @content;
+  }
+}
+
+@mixin base-page-style {
+  flex: 1;
+  width: auto;
+  min-height: 100dvh;
+  padding: variables.$spacing-md;
+  background: variables.$primary-background-color;
+  box-sizing: border-box;
+
+  @content;
+}

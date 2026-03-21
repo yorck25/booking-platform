@@ -1,0 +1,14 @@
+@use "variables";
+@use "mixins";
+
+body {
+    margin: 0;
+    font-family: variables.$primary-font-family;
+
+    .body {
+        display: flex;
+        color: white;
+        font-family: variables.$primary-font-family;
+        font-weight: 400;
+    }
+}
