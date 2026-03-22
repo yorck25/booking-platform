@@ -1,10 +1,9 @@
-import {useState} from "preact/hooks";
-import {Select} from "../../components/select";
+import { useState } from "preact/hooks";
+import { Select } from "../../components/select";
 import Flatpickr from "react-flatpickr";
-
-import("flatpickr/dist/themes/light.css");
+import "flatpickr/dist/themes/light.css";
 import styles from "./style.module.scss";
-import {Divider} from "../../components/divider";
+import { Divider } from "../../components/divider";
 
 export const ReservationPage = () => {
     const times = [
@@ -14,7 +13,7 @@ export const ReservationPage = () => {
         "10:30",
     ];
 
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState<Date | null>(null);
     const [time, setTime] = useState(times[0]);
 
     const handleTimeInput = (e: Event) => {
@@ -29,15 +28,18 @@ export const ReservationPage = () => {
         }));
     };
 
+    const handleSubmit = (e: Event) => {
+        e.preventDefault();
+    };
+
     return (
         <div className={styles.time_booking_view}>
             <div className={styles.header}>
                 <h1>Termin Buchen</h1>
-
                 <Divider />
             </div>
 
-            <form className={styles.reservation_form}>
+            <form className={styles.reservation_form} onSubmit={handleSubmit}>
                 <div className={styles.input_group}>
                     <div className={styles.date_picker_group}>
                         <label htmlFor="reservation-date" className={styles.label}>
@@ -45,10 +47,13 @@ export const ReservationPage = () => {
                         </label>
 
                         <Flatpickr
-                            value={date}
-                            onChange={(_, dateStr) => setDate(dateStr)}
+                            value={date || undefined}
+                            onChange={(selectedDates) => {
+                                setDate(selectedDates.length > 0 ? selectedDates[0] : null);
+                            }}
                             options={{
-                                dateFormat: "d-m-y",
+                                dateFormat: "d-m-Y",
+                                allowInput: false,
                             }}
                             className={styles.date_input}
                         />
@@ -67,43 +72,20 @@ export const ReservationPage = () => {
                 <Divider />
 
                 <div className={styles.suggestion_group}>
-                    {/*Todo: Replace with render function*/}
-                    <div className={styles.suggestion_cell}>
-                        <p>08:30</p>
-                    </div>
-
-                    <div className={styles.suggestion_cell}>
-                        <p>09:00</p>
-                    </div>
-
-                    <div className={styles.suggestion_cell}>
-                        <p>09:30</p>
-                    </div>
-
-                    <div className={styles.suggestion_cell}>
-                        <p>10:00</p>
-                    </div>
-
-                    <div className={styles.suggestion_cell}>
-                        <p>10:30</p>
-                    </div>
-
-                    <div className={styles.suggestion_cell}>
-                        <p>11:00</p>
-                    </div>
-
-
-                    <div className={styles.suggestion_cell}>
-                        <p>11:30</p>
-                    </div>
-
-                    <div className={styles.suggestion_cell}>
-                        <p>12:00</p>
-                    </div>
+                    <div className={styles.suggestion_cell}><p>08:30</p></div>
+                    <div className={styles.suggestion_cell}><p>09:00</p></div>
+                    <div className={styles.suggestion_cell}><p>09:30</p></div>
+                    <div className={styles.suggestion_cell}><p>10:00</p></div>
+                    <div className={styles.suggestion_cell}><p>10:30</p></div>
+                    <div className={styles.suggestion_cell}><p>11:00</p></div>
+                    <div className={styles.suggestion_cell}><p>11:30</p></div>
+                    <div className={styles.suggestion_cell}><p>12:00</p></div>
                 </div>
 
                 <div className={styles.footer_button_wrapper}>
-                    <button className={styles.button} type={"submit"}>Weiter</button>
+                    <button className={styles.button} type="submit">
+                        Weiter
+                    </button>
                 </div>
             </form>
         </div>
