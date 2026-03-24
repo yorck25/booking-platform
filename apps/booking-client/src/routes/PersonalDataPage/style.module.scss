@@ -1,0 +1,77 @@
+@use "../../styles/variables";
+@use "../../styles/mixins";
+
+.time_booking_view {
+  padding: 0 16px;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding-bottom: 125px;
+  width: 100%;
+  margin: 0 auto;
+
+  @include mixins.desktop {
+    max-width: 1000px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .header {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    h1 {
+      color: #202124;
+      font-size: 24px;
+      margin: 0;
+    }
+  }
+
+  .reservation_form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing-md;
+    width: 100%;
+  }
+
+  .footer_button_wrapper {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 40px;
+    width: auto;
+    z-index: 100;
+
+    @include mixins.desktop {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: calc(100% - 48px);
+      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .button {
+      width: 100%;
+
+      @include mixins.desktop {
+        max-width: 450px;
+      }
+
+      border-radius: 8px;
+      border: none;
+      height: 45px;
+      color: #fff;
+      background: #B455DB;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: Inter, serif;
+      cursor: pointer;
+    }
+  }
+}
