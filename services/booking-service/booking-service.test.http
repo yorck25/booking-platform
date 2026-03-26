@@ -1,0 +1,377 @@
+### =========================================================
+### Booking Service API tests
+### IntelliJ / GoLand HTTP Client format
+### =========================================================
+
+@baseUrl = http://localhost:8080/api/v1
+
+@barberId = 11111111-1111-1111-1111-111111111111
+@employeeId = 22222222-2222-2222-2222-222222222222
+@employeeId2 = 33333333-3333-3333-3333-333333333333
+@serviceId = 44444444-4444-4444-4444-444444444444
+@serviceId2 = 55555555-5555-5555-5555-555555555555
+@workingHourId = 66666666-6666-6666-6666-666666666666
+@breakId = 77777777-7777-7777-7777-777777777777
+@closedDayId = 88888888-8888-8888-8888-888888888888
+@bookingId = 99999999-9999-9999-9999-999999999999
+
+### =========================================================
+### Default / Health
+### =========================================================
+
+### Default
+GET {{baseUrl}}/
+
+### Health
+GET {{baseUrl}}/health
+
+### =========================================================
+### Barber Users / Employees
+### =========================================================
+
+### Register barber user / employee
+POST {{baseUrl}}/barber/users/register
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "username": "owner01",
+  "firstName": "Yorck",
+  "lastName": "Dombrowsky",
+  "displayName": "Yorck Dombrowsky",
+  "internalName": "yorck-dombrowsky",
+  "email": "yorck@example.com",
+  "phone": "01701234567",
+  "password": "Test1234!",
+  "role": "owner"
+}
+
+### Login barber user / employee
+POST {{baseUrl}}/barber/users/login
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "username": "owner01",
+  "password": "Test1234!"
+}
+
+### =========================================================
+### Services
+### =========================================================
+
+### Create service 1
+POST {{baseUrl}}/barber/services
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "displayName": "Men Short Haircut",
+  "description": "Classic short haircut for men",
+  "durationMinutes": 30,
+  "priceCents": 2200,
+  "active": true,
+  "sortOrder": 1
+}
+
+### Create service 2
+POST {{baseUrl}}/barber/services
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "displayName": "Women Coloring",
+  "description": "Coloring service",
+  "durationMinutes": 90,
+  "priceCents": 6500,
+  "active": true,
+  "sortOrder": 2
+}
+
+### List all services
+GET {{baseUrl}}/barber/services/list?barberId={{barberId}}
+
+### List only active services
+GET {{baseUrl}}/barber/services/list?barberId={{barberId}}&active=true
+
+### Get service by id
+GET {{baseUrl}}/barber/services/{{serviceId}}?barberId={{barberId}}
+
+### Update service
+PUT {{baseUrl}}/barber/services/{{serviceId}}
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "displayName": "Men Haircut Premium",
+  "description": "Haircut incl. wash",
+  "durationMinutes": 45,
+  "priceCents": 2800,
+  "active": true,
+  "sortOrder": 1
+}
+
+### Delete service
+DELETE {{baseUrl}}/barber/services/{{serviceId}}?barberId={{barberId}}
+
+### =========================================================
+### Employee Working Hours
+### =========================================================
+
+### Create Monday working hours
+POST {{baseUrl}}/employees/{{employeeId}}/working-hours
+Content-Type: application/json
+
+{
+  "weekday": 1,
+  "startTime": "09:00",
+  "endTime": "18:00",
+  "isClosed": false
+}
+
+### Create Tuesday working hours
+POST {{baseUrl}}/employees/{{employeeId}}/working-hours
+Content-Type: application/json
+
+{
+  "weekday": 2,
+  "startTime": "09:00",
+  "endTime": "18:00",
+  "isClosed": false
+}
+
+### Create Monday working hours for second employee
+POST {{baseUrl}}/employees/{{employeeId2}}/working-hours
+Content-Type: application/json
+
+{
+  "weekday": 1,
+  "startTime": "09:00",
+  "endTime": "18:00",
+  "isClosed": false
+}
+
+### List working hours for employee
+GET {{baseUrl}}/employees/{{employeeId}}/working-hours
+
+### Get one working hour entry
+GET {{baseUrl}}/employees/{{employeeId}}/working-hours/{{workingHourId}}
+
+### Update working hour entry
+PUT {{baseUrl}}/employees/{{employeeId}}/working-hours/{{workingHourId}}
+Content-Type: application/json
+
+{
+  "startTime": "10:00",
+  "endTime": "19:00",
+  "isClosed": false
+}
+
+### Delete working hour entry
+DELETE {{baseUrl}}/employees/{{employeeId}}/working-hours/{{workingHourId}}
+
+### =========================================================
+### Employee Breaks
+### =========================================================
+
+### Create break
+POST {{baseUrl}}/employees/{{employeeId}}/breaks
+Content-Type: application/json
+
+{
+  "weekday": 1,
+  "startTime": "13:00",
+  "endTime": "13:30",
+  "description": "Lunch break",
+  "active": true
+}
+
+### Create second employee break
+POST {{baseUrl}}/employees/{{employeeId2}}/breaks
+Content-Type: application/json
+
+{
+  "weekday": 1,
+  "startTime": "14:00",
+  "endTime": "14:30",
+  "description": "Coffee break",
+  "active": true
+}
+
+### List employee breaks
+GET {{baseUrl}}/employees/{{employeeId}}/breaks
+
+### Get one break
+GET {{baseUrl}}/employees/{{employeeId}}/breaks/{{breakId}}
+
+### Update break
+PUT {{baseUrl}}/employees/{{employeeId}}/breaks/{{breakId}}
+Content-Type: application/json
+
+{
+  "startTime": "13:15",
+  "endTime": "13:45",
+  "description": "Late lunch break",
+  "active": true
+}
+
+### Delete break
+DELETE {{baseUrl}}/employees/{{employeeId}}/breaks/{{breakId}}
+
+### =========================================================
+### Closed Days
+### =========================================================
+
+### Create closed day
+POST {{baseUrl}}/closed-days
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "closedDate": "2026-12-24",
+  "reason": "Christmas Eve"
+}
+
+### List closed days
+GET {{baseUrl}}/closed-days?barberId={{barberId}}
+
+### Get one closed day
+GET {{baseUrl}}/closed-days/{{closedDayId}}?barberId={{barberId}}
+
+### Update closed day
+PUT {{baseUrl}}/closed-days/{{closedDayId}}?barberId={{barberId}}
+Content-Type: application/json
+
+{
+  "closedDate": "2026-12-31",
+  "reason": "New Year's Eve"
+}
+
+### Delete closed day
+DELETE {{baseUrl}}/closed-days/{{closedDayId}}?barberId={{barberId}}
+
+### =========================================================
+### Availability / Reservation Slots
+### =========================================================
+
+### Get reservation slots for a barber, based on service and date
+GET {{baseUrl}}/barber/reservations-slots?barberId={{barberId}}&serviceId={{serviceId}}&bookingDate=2026-03-30
+
+### Another availability check
+GET {{baseUrl}}/barber/reservations-slots?barberId={{barberId}}&serviceId={{serviceId2}}&bookingDate=2026-03-31
+
+### =========================================================
+### Bookings
+### =========================================================
+
+### Create booking
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "serviceId": "{{serviceId}}",
+  "customerFirstName": "Max",
+  "customerLastName": "Mustermann",
+  "customerPhoneNumber": "01701234567",
+  "customerEmail": "max@example.com",
+  "bookingDate": "2026-03-30",
+  "startTime": "09:00",
+  "notes": "Please no machine on the sides",
+  "termsAccepted": true
+}
+
+### Create second booking at same time to test multi-employee availability
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "serviceId": "{{serviceId}}",
+  "customerFirstName": "Anna",
+  "customerLastName": "Schmidt",
+  "customerPhoneNumber": "01707654321",
+  "customerEmail": "anna@example.com",
+  "bookingDate": "2026-03-30",
+  "startTime": "09:00",
+  "notes": "Need fast appointment",
+  "termsAccepted": true
+}
+
+### Create booking that should fail when no employee is free
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "serviceId": "{{serviceId}}",
+  "customerFirstName": "Peter",
+  "customerLastName": "Mueller",
+  "customerPhoneNumber": "01709998877",
+  "bookingDate": "2026-03-30",
+  "startTime": "09:00",
+  "termsAccepted": true
+}
+
+### Cancel booking
+PUT {{baseUrl}}/bookings/cancel
+Content-Type: application/json
+
+{
+  "bookingId": "{{bookingId}}",
+  "customerPhoneNumber": "01701234567",
+  "cancelReason": "I cannot come"
+}
+
+### =========================================================
+### Negative tests
+### =========================================================
+
+### Create service without barberId
+POST {{baseUrl}}/barber/services
+Content-Type: application/json
+
+{
+  "displayName": "Invalid Service",
+  "durationMinutes": 30,
+  "priceCents": 1000
+}
+
+### Create booking without terms accepted
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "barberId": "{{barberId}}",
+  "serviceId": "{{serviceId}}",
+  "customerFirstName": "Invalid",
+  "customerLastName": "User",
+  "customerPhoneNumber": "01701111111",
+  "bookingDate": "2026-03-30",
+  "startTime": "10:00",
+  "termsAccepted": false
+}
+
+### Get slots with invalid date
+GET {{baseUrl}}/barber/reservations-slots?barberId={{barberId}}&serviceId={{serviceId}}&bookingDate=30-03-2026
+
+### Create working hour with invalid weekday
+POST {{baseUrl}}/employees/{{employeeId}}/working-hours
+Content-Type: application/json
+
+{
+  "weekday": 9,
+  "startTime": "09:00",
+  "endTime": "18:00",
+  "isClosed": false
+}
+
+### Create break without endTime
+POST {{baseUrl}}/employees/{{employeeId}}/breaks
+Content-Type: application/json
+
+{
+  "weekday": 1,
+  "startTime": "12:00",
+  "description": "Invalid break"
+}
