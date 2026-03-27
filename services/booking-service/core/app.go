@@ -28,6 +28,7 @@ func InitApp() (*App, error) {
 	ctx.config = config
 
 	fmt.Println("Start to connected to PostgreSQL!")
+	fmt.Println(ctx.config.ConnectionStr)
 	logOutboundIP()
 	db, err := sqlx.Connect("postgres", ctx.config.ConnectionStr)
 	if err != nil {
