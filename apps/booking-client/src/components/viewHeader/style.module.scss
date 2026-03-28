@@ -1,0 +1,20 @@
+@use "../../styles/variables";
+@use "../../styles/mixins";
+
+.header {
+  .header_row {
+    display: flex;
+    margin-bottom: 12px;
+    margin-top: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    h1 {
+      color: #202124;
+      font-size: 24px;
+      margin: 0;
+    }
+  }
+}

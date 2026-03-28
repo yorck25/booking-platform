@@ -1,0 +1,236 @@
+@use "../../styles/variables";
+@use "../../styles/mixins";
+
+.service_view {
+  min-height: 100dvh;
+  height: 100dvh;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @include mixins.desktop {
+    max-width: 1000px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 20px 0 20px;
+  }
+
+  .subtitle {
+    margin: 0 0 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #d9d9de;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #8f8f95;
+  }
+
+  .render_service_section {
+    margin-bottom: 16px;
+  }
+
+  .section {
+    margin-bottom: 16px;
+  }
+
+  .section_title {
+    margin: 0 0 12px;
+    font-size: 17px;
+    line-height: 1.3;
+    font-weight: 700;
+    color: #222222;
+  }
+
+  .service_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .service_card {
+    width: 100%;
+    border: 1px solid #dcc8f0;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(127, 74, 170, 0.14);
+    padding: 10px 10px 9px;
+    text-align: left;
+    display: block;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    appearance: none;
+  }
+
+  .service_card_selected {
+    background: #f2e7fb;
+    border-color: #d6b8f4;
+    box-shadow: 0 2px 10px rgba(177, 92, 255, 0.18);
+  }
+
+  .service_card_top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .service_name {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: #1f1f24;
+  }
+
+  .select_action {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #292929;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+
+    .chevron {
+      height: 14px;
+      rotate: 270deg;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  .selected_badge {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 22px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #d8b0ff;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+
+  .service_meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    line-height: 1.3;
+    color: #404046;
+  }
+
+  .service_meta_icon {
+    width: 16px;
+    height: 16px;
+    color: #8d8d94;
+    flex-shrink: 0;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+
+  .note_section {
+    width: 100%;
+    margin-top: 16px;
+    padding-top: 2px;
+  }
+
+  .note_input {
+    width: 100%;
+    min-height: 110px;
+    resize: none;
+    border: 1px solid #d7d7dd;
+    border-radius: 10px;
+    background: #f7f7f7;
+    padding: 14px 12px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #232329;
+    outline: none;
+
+    &::placeholder {
+      color: #b1b1b7;
+    }
+
+    &:focus {
+      border-color: #c38cff;
+      background: #ffffff;
+    }
+  }
+
+  .footer {
+    flex-shrink: 0;
+    padding: 16px 0 calc(16px + env(safe-area-inset-bottom, 0px));
+    background: #ffffff;
+  }
+
+  .button {
+    width: 100%;
+
+    @include mixins.desktop {
+      max-width: 450px;
+    }
+
+    border-radius: 8px;
+    border: none;
+    height: 45px;
+    color: #fff;
+    background: #B455DB;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Inter, serif;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 768px) {
+  .service_view {
+    .content,
+    .footer {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .content {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .footer {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}
