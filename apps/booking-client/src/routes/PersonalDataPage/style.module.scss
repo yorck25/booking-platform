@@ -16,26 +16,48 @@
   }
 
   .header {
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
+    .header_row {
+      display: flex;
+      margin-bottom: 12px;
+      margin-top: 40px;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
 
-    h1 {
-      color: #202124;
-      font-size: 24px;
-      margin: 0;
+      h1 {
+        color: #202124;
+        font-size: 24px;
+        margin: 0;
+      }
     }
   }
 
-  .reservation_form {
+  .details_render_container {
+    padding: 30px 0 0 0;
+
+    .details {
+      margin-bottom: 30px;
+    }
+  }
+
+  .personal_data_form {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
     gap: variables.$spacing-md;
     width: 100%;
+
+    .input_group {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .form_row {
+        display: flex;
+        gap: 1.5rem;
+      }
+    }
   }
 
   .footer_button_wrapper {
