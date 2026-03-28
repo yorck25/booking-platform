@@ -2,7 +2,7 @@ import styles from "./style.module.scss";
 import {Divider} from "../../components/divider";
 import {useState} from "preact/hooks";
 import {Input, InputType} from "../../components/input";
-import {ReservationDetails} from "../../components/ReservationDetails";
+import {ReservationDetails} from "../../components/reservationDetails";
 
 export const PersonalDataPage = () => {
     // const date = "12.01.2026";
@@ -49,7 +49,7 @@ export const PersonalDataPage = () => {
                 <div className={styles.header_row}>
                     <h1>Persönliche Daten</h1>
                 </div>
-                
+
                 <Divider/>
             </div>
 

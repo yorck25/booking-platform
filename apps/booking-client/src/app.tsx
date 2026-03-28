@@ -1,12 +1,12 @@
 import './app.css'
-import {PersonalDataPage} from "./routes/PersonalDataPage";
+import {ServicePage} from "./routes/servicePage";
 
 export function App() {
 
 
     return (
         <>
-            <PersonalDataPage/>
+            <ServicePage/>
         </>
     );
 }
