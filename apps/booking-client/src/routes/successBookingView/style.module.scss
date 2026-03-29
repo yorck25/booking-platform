@@ -1,0 +1,149 @@
+@use "../../styles/mixins";
+
+.success_booking_view {
+  min-height: 100dvh;
+  height: 100dvh;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @include mixins.desktop {
+    max-width: 800px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .check_icon_container_wrapper {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .check_icon_container {
+      width: 50px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #E9FCE9;
+      border: 1px solid #2A9055;
+      border-radius: 32px;
+
+      svg {
+        height: 24px;
+        fill: #2A9055;
+      }
+    }
+  }
+
+  .description {
+    margin-top: 24px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 22px;
+      text-align: center;
+      color: #000;
+    }
+
+    .description_text {
+      display: flex;
+      flex-direction: column;
+      margin-top: 24px;
+      gap: 8px;
+
+      .row {
+        font-size: 16px;
+        text-align: center;
+        margin: 0;
+      }
+    }
+  }
+
+  .details {
+    margin-top: 16px;
+  }
+
+  .hint {
+    margin-top: 26px;
+    padding: 12px 14px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background-color: #F3F3F7;
+
+    .leading_icon {
+      height: 100%;
+      aspect-ratio: 1 / 1;
+
+      svg {
+        height: 100%;
+        width: 100%;
+        fill: #C082D1;
+      }
+    }
+
+    .hint_description {
+      p {
+        margin: 0;
+      }
+
+      .hint_headline {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .hint_text {
+        font-size: 10px;
+      }
+    }
+  }
+
+  .footer_button_wrapper {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 40px;
+    width: auto;
+    z-index: 100;
+
+    @include mixins.desktop {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: calc(100% - 48px);
+      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .button {
+      width: 100%;
+
+      @include mixins.desktop {
+        max-width: 450px;
+      }
+
+      border-radius: 8px;
+      border: none;
+      height: 45px;
+      color: #fff;
+      background: #B455DB;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: Inter, serif;
+      cursor: pointer;
+    }
+  }
+}
