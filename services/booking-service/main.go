@@ -26,7 +26,7 @@ func main() {
 	}
 
 	app.Use(middleware.CORSWithConfig(middleware.DefaultCORSConfig))
-	mainRoot := app.Group("/api/v1")
+	mainRoot := app.Group("/v1")
 
 	mainRoot.GET("/", defaultUrl)
 	mainRoot.GET("/health", healthUrl)

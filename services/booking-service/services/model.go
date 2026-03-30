@@ -12,6 +12,7 @@ type Service struct {
 	InternalName    string    `json:"internalName" db:"internal_name"`
 	DisplayName     string    `json:"displayName" db:"display_name"`
 	Description     string    `json:"description" db:"description"`
+	Category        string    `json:"category" db:"category"`
 	DurationMinutes int       `json:"durationMinutes" db:"duration_minutes"`
 	PriceCents      int       `json:"priceCents" db:"price_cents"`
 	Active          bool      `json:"active" db:"active"`
@@ -27,6 +28,7 @@ type CreateServiceRequest struct {
 	InternalName    string    `json:"internalName" db:"internal_name"`
 	DisplayName     string    `json:"displayName" db:"display_name"`
 	Description     string    `json:"description" db:"description"`
+	Category        string    `json:"category" db:"category"`
 	DurationMinutes int       `json:"durationMinutes" db:"duration_minutes"`
 	PriceCents      int       `json:"priceCents" db:"price_cents"`
 	Active          *bool     `json:"active" db:"active"`
@@ -39,6 +41,7 @@ type UpdateServiceRequest struct {
 	InternalName    *string   `json:"internalName,omitempty" db:"internal_name"`
 	DisplayName     *string   `json:"displayName,omitempty" db:"display_name"`
 	Description     *string   `json:"description,omitempty" db:"description"`
+	Category        string    `json:"category" db:"category"`
 	DurationMinutes *int      `json:"durationMinutes,omitempty" db:"duration_minutes"`
 	PriceCents      *int      `json:"priceCents,omitempty" db:"price_cents"`
 	Active          *bool     `json:"active,omitempty" db:"active"`

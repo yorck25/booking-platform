@@ -1,6 +1,7 @@
 package core
 
 import (
+	"booking-service/common"
 	"fmt"
 	"net"
 	"net/http"
@@ -97,5 +98,12 @@ func logOutboundIP() {
 	defer conn.Close()
 
 	localAddr := conn.LocalAddr().(*net.UDPAddr)
-	fmt.Println("Outbound IP:", localAddr.IP.String())
+	fmt.Println("Private IP:", localAddr.IP.String())
+	publicIP, err := common.GetURLBody("https://api.ipify.org")
+	if err != nil {
+		fmt.Println("Error getting public IP:", err)
+		return
+	}
+
+	fmt.Println("Public IP:", publicIP)
 }
