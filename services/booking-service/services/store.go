@@ -125,6 +125,7 @@ func (s *Store) ListServices(barberId uuid.UUID, active *bool) ([]*Service, erro
 			internal_name,
 			display_name,
 			description,
+			category,
 			duration_minutes,
 			price_cents,
 			active,
