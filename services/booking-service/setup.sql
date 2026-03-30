@@ -1,6 +1,6 @@
 CREATE TABLE barbers
 (
-    id            uuid PRIMARY KEY,
+    id uuid PRIMARY KEY,
     internal_name varchar(255) NOT NULL,
     display_name  varchar(255) NOT NULL,
     email         varchar(255),
@@ -17,8 +17,8 @@ CREATE TABLE barbers
 
 CREATE TABLE barber_employees
 (
-    id              uuid PRIMARY KEY,
-    barber_id       uuid         NOT NULL REFERENCES barbers (id) ON DELETE CASCADE,
+    id uuid PRIMARY KEY,
+    barber_id uuid NOT NULL REFERENCES barbers (id) ON DELETE CASCADE,
 
     username        varchar(128) NOT NULL,
     first_name      varchar(128) NOT NULL,
@@ -52,14 +52,14 @@ CREATE TABLE barber_employees
 
 CREATE TABLE employee_working_hours
 (
-    id          uuid PRIMARY KEY,
-    employee_id uuid      NOT NULL REFERENCES barber_employees (id) ON DELETE CASCADE,
-    weekday     smallint  NOT NULL CHECK (weekday BETWEEN 0 AND 6),
-    start_time  time      NOT NULL,
-    end_time    time      NOT NULL,
-    is_closed   boolean   NOT NULL DEFAULT false,
-    created_at  timestamp NOT NULL DEFAULT now(),
-    updated_at  timestamp NOT NULL DEFAULT now(),
+    id uuid PRIMARY KEY,
+    employee_id uuid NOT NULL REFERENCES barber_employees (id) ON DELETE CASCADE,
+    weekday    smallint  NOT NULL CHECK (weekday BETWEEN 0 AND 6),
+    start_time time      NOT NULL,
+    end_time   time      NOT NULL,
+    is_closed  boolean   NOT NULL DEFAULT false,
+    created_at timestamp NOT NULL DEFAULT now(),
+    updated_at timestamp NOT NULL DEFAULT now(),
 
     CONSTRAINT chk_employee_working_hours_time
         CHECK (
@@ -71,8 +71,8 @@ CREATE TABLE employee_working_hours
 
 CREATE TABLE employee_breaks
 (
-    id          uuid PRIMARY KEY,
-    employee_id uuid      NOT NULL REFERENCES barber_employees (id) ON DELETE CASCADE,
+    id uuid PRIMARY KEY,
+    employee_id uuid NOT NULL REFERENCES barber_employees (id) ON DELETE CASCADE,
     weekday     smallint  NOT NULL CHECK (weekday BETWEEN 0 AND 6),
     start_time  time      NOT NULL,
     end_time    time      NOT NULL,
@@ -87,22 +87,23 @@ CREATE TABLE employee_breaks
 
 CREATE TABLE barber_closed_days
 (
-    id          uuid PRIMARY KEY,
-    barber_id   uuid         NOT NULL REFERENCES barbers (id) ON DELETE CASCADE,
-    closed_date date         NOT NULL,
+    id uuid PRIMARY KEY,
+    barber_id uuid NOT NULL REFERENCES barbers (id) ON DELETE CASCADE,
+    closed_date date      NOT NULL,
     reason      varchar(255),
-    created_at  timestamp    NOT NULL DEFAULT now(),
+    created_at  timestamp NOT NULL DEFAULT now(),
 
     CONSTRAINT uq_barber_closed_days UNIQUE (barber_id, closed_date)
 );
 
 CREATE TABLE services
 (
-    id               uuid PRIMARY KEY,
-    barber_id        uuid         NOT NULL REFERENCES barbers (id) ON DELETE CASCADE,
+    id uuid PRIMARY KEY,
+    barber_id uuid NOT NULL REFERENCES barbers (id) ON DELETE CASCADE,
     internal_name    varchar(255) NOT NULL,
     display_name     varchar(255) NOT NULL,
     description      text,
+    category         varchar(64)  NOT NULL DEFAULT 'other',
     duration_minutes integer      NOT NULL,
     price_cents      integer      NOT NULL,
     active           boolean      NOT NULL DEFAULT true,
@@ -120,20 +121,20 @@ CREATE TABLE services
 
 CREATE TABLE employee_services
 (
-    id          uuid PRIMARY KEY,
-    employee_id uuid      NOT NULL REFERENCES barber_employees (id) ON DELETE CASCADE,
-    service_id  uuid      NOT NULL REFERENCES services (id) ON DELETE CASCADE,
-    created_at  timestamp NOT NULL DEFAULT now(),
+    id uuid PRIMARY KEY,
+    employee_id uuid NOT NULL REFERENCES barber_employees (id) ON DELETE CASCADE,
+    service_id uuid NOT NULL REFERENCES services (id) ON DELETE CASCADE,
+    created_at timestamp NOT NULL DEFAULT now(),
 
     CONSTRAINT uq_employee_services UNIQUE (employee_id, service_id)
 );
 
 CREATE TABLE bookings
 (
-    id                    uuid PRIMARY KEY,
-    barber_id             uuid         NOT NULL REFERENCES barbers (id) ON DELETE CASCADE,
-    employee_id           uuid         NOT NULL REFERENCES barber_employees (id) ON DELETE RESTRICT,
-    service_id            uuid         NOT NULL REFERENCES services (id) ON DELETE RESTRICT,
+    id uuid PRIMARY KEY,
+    barber_id uuid NOT NULL REFERENCES barbers (id) ON DELETE CASCADE,
+    employee_id uuid NOT NULL REFERENCES barber_employees (id) ON DELETE RESTRICT,
+    service_id uuid NOT NULL REFERENCES services (id) ON DELETE RESTRICT,
 
     customer_first_name   varchar(128) NOT NULL,
     customer_last_name    varchar(255) NOT NULL,
@@ -181,11 +182,11 @@ CREATE TABLE bookings
 
 CREATE TABLE booking_events
 (
-    id          uuid PRIMARY KEY,
-    booking_id  uuid         NOT NULL REFERENCES bookings (id) ON DELETE CASCADE,
-    event_type  varchar(50)  NOT NULL,
-    message     text,
-    created_at  timestamp    NOT NULL DEFAULT now()
+    id uuid PRIMARY KEY,
+    booking_id uuid NOT NULL REFERENCES bookings (id) ON DELETE CASCADE,
+    event_type varchar(50) NOT NULL,
+    message    text,
+    created_at timestamp   NOT NULL DEFAULT now()
 );
 
 CREATE INDEX idx_barber_employees_barber_id
