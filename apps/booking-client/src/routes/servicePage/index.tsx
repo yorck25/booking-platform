@@ -4,10 +4,16 @@ import { dummyServices, type IService, type ServiceCategory } from "../../models
 import { useMemo, useState } from "preact/hooks";
 import {ChevronIcon, ClockIcon} from "../../components/icons";
 import { Divider } from "../../components/divider";
+import {BookingService} from "../../services/bookingService";
+import {useEffect} from "preact/hooks"
 
 export const ServicePage = () => {
     const [selectedServiceId, setSelectedServiceId] = useState<string>("22222222-2222-2222-2222-222222222222");
     const [note, setNote] = useState<string>("");
+
+    useEffect(() => {
+        BookingService.loadAvailableService("11111111-1111-1111-1111-111111111111");
+    }, []);
 
     const groupedServices = useMemo(() => {
         const sortServices = (category: ServiceCategory) =>

@@ -10,12 +10,13 @@ export function App() {
     return (
         <>
             <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<RedirectToServices />} />                        <Route path="/services" element={<ServicePage />} />
-                        <Route path="/reservation" element={<ReservationPage />} />
-                        <Route path="/personal-data" element={<PersonalDataPage />} />
-                        <Route path="/success-booking" element={<SuccessBookingView />} />
-                    </Routes>
+                <Routes>
+                    <Route path="/" element={<RedirectToServices/>}/>
+                    <Route path="/services" element={<ServicePage/>}/>
+                    <Route path="/reservation" element={<ReservationPage/>}/>
+                    <Route path="/personal-data" element={<PersonalDataPage/>}/>
+                    <Route path="/success-booking" element={<SuccessBookingView/>}/>
+                </Routes>
             </BrowserRouter>
         </>
     );

@@ -1,10 +1,9 @@
 import { Config } from "../lib/config";
 import { NetworkAdapter, NewDefaultHeader } from "../lib/networkAdapter";
 
-export class BookingService {
+class CBookingService {
     public BarberId = "11111111-1111-1111-1111-111111111111";
     private BASE_URL = Config.BookingServiceBaseUrl;
-
 
     // -----------------
     // Bookings
@@ -30,8 +29,31 @@ export class BookingService {
     }
 
     // -----------------
-    // Bookings
+    // Barber
     // -----------------
 
+    loadAvailableService(barberId: string) {
+        const headers = NewDefaultHeader();
 
+        const requestOptions: RequestInit = {
+            method: NetworkAdapter.GET,
+            headers: headers
+        }
+
+        console.log(this.BASE_URL)
+
+        fetch(`${this.BASE_URL}/barber/services/list?barberId=${barberId}`, requestOptions).then(r => {
+            if(r.status !== 200) {
+                console.warn(r.body);
+                return false;
+            }
+            return r.json();
+        }).then(data => {
+            console.log(data)
+        })
+
+        return false;
+    }
 }
+
+export const BookingService = new CBookingService();
