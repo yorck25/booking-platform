@@ -31,6 +31,9 @@ func main() {
 	mainRoot.GET("/", defaultUrl)
 	mainRoot.GET("/health", healthUrl)
 
+	// -- Auth --
+	mainRoot.GET("/auth/verfiy-barber", auth.HandleVerifyAuth)
+
 	// -- Bookings --
 	mainRoot.POST("/bookings", bookings.HandleCreateBooking)
 	mainRoot.PUT("/bookings/cancel", bookings.CancelBooking)

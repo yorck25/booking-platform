@@ -18,6 +18,24 @@ func NewStore(ctx *core.WebContext) *Store {
 	return &Store{db: ctx.GetDb()}
 }
 
+func (s *Store) GetBarberByID(barberId string) (Barber, error) {
+	var barber Barber
+
+	err := s.db.Get(&barber, `
+		SELECT *
+		FROM barbers
+		WHERE id = $1
+		  AND deleted = false
+		LIMIT 1
+	`, barberId)
+
+	if err != nil {
+		return barber, err
+	}
+
+	return barber, nil
+}
+
 func (s *Store) GetReservationSlots(req GetReservationSlotsRequest) ([]ReservationSlot, error) {
 	isClosed, err := s.isBarberClosedDay(req.BarberID, req.BookingDate)
 	if err != nil {

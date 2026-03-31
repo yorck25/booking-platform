@@ -11,3 +11,8 @@ type UserClaims struct {
 	BarberId uuid.UUID `json:"barberId"`
 	jwt.StandardClaims
 }
+
+type VerifyClaims struct {
+	BarberId uuid.UUID `json:"barberId"`
+	jwt.StandardClaims
+}
