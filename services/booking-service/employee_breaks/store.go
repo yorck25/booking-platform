@@ -18,7 +18,7 @@ func NewStore(ctx *core.WebContext) *Store {
 }
 
 func (s *Store) Create(req CreateEmployeeBreakRequest) (*EmployeeBreak, error) {
-	now := time.Now()
+	now := time.Now().UTC()
 
 	active := true
 	if req.Active != nil {
@@ -149,7 +149,7 @@ func (s *Store) Update(employeeId uuid.UUID, req UpdateEmployeeBreakRequest) (*E
 		current.Active = *req.Active
 	}
 
-	current.UpdatedAt = time.Now()
+	current.UpdatedAt = time.Now().UTC()
 
 	stmt, err := s.db.PrepareNamed(`
 		UPDATE employee_breaks

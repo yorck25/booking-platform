@@ -18,7 +18,7 @@ func NewStore(ctx *core.WebContext) *Store {
 }
 
 func (s *Store) Create(req CreateEmployeeWorkingHourRequest) (*EmployeeWorkingHour, error) {
-	now := time.Now()
+	now := time.Now().UTC()
 
 	item := &EmployeeWorkingHour{
 		Id:         req.Id,
@@ -136,7 +136,7 @@ func (s *Store) Update(employeeId uuid.UUID, req UpdateEmployeeWorkingHourReques
 		current.IsClosed = *req.IsClosed
 	}
 
-	current.UpdatedAt = time.Now()
+	current.UpdatedAt = time.Now().UTC()
 
 	stmt, err := s.db.PrepareNamed(`
 		UPDATE employee_working_hours

@@ -94,7 +94,7 @@ func (s *Store) CreateBooking(req CreateBookingRequest) (*Booking, error) {
 		return nil, ErrNoAvailableEmployee
 	}
 
-	now := time.Now()
+	now := time.Now().UTC()
 	booking := &Booking{
 		ID:                  uuid.New(),
 		BarberID:            req.BarberID,
@@ -217,7 +217,7 @@ func (s *Store) CancelBooking(req CancelBookingRequest) error {
 		return ErrBookingCannotBeCanceled
 	}
 
-	now := time.Now()
+	now := time.Now().UTC()
 	canceledAt = &now
 
 	_, err = s.db.Exec(`

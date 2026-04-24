@@ -11,7 +11,7 @@ func LoadConfig() (*common.Config, error) {
 
 	key := os.Getenv("JWT_SECRET")
 	if key == "" {
-		return nil, errors.New("no secret key")
+		return nil, errors.New("no JWT_SECRET")
 	}
 	config.JwtSecretKey = []byte(key)
 
@@ -20,6 +20,12 @@ func LoadConfig() (*common.Config, error) {
 		return nil, errors.New("no CONNECTION_STR")
 	}
 	config.ConnectionStr = ConnectionStr
+
+	TursoToken := os.Getenv("TURSO_TOKEN")
+	if TursoToken == "" {
+		return nil, errors.New("no TURSO_TOKEN")
+	}
+	config.TursoToken = TursoToken
 
 	return config, nil
 }

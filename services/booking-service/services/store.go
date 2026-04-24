@@ -18,7 +18,7 @@ func NewStore(ctx *core.WebContext) *Store {
 }
 
 func (s *Store) CreateService(req CreateServiceRequest) (*Service, error) {
-	now := time.Now()
+	now := time.Now().UTC()
 
 	active := true
 	if req.Active != nil {
@@ -187,7 +187,7 @@ func (s *Store) UpdateService(req UpdateServiceRequest) (*Service, error) {
 		current.SortOrder = *req.SortOrder
 	}
 
-	current.UpdatedAt = time.Now()
+	current.UpdatedAt = time.Now().UTC()
 
 	stmt, err := s.db.PrepareNamed(`
 		UPDATE services

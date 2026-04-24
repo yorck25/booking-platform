@@ -11,6 +11,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
 type App struct {
@@ -28,20 +29,31 @@ func InitApp() (*App, error) {
 
 	ctx.config = config
 
-	fmt.Println("Start to connected to PostgreSQL!")
+	fmt.Println("Start connecting to Turso/libSQL!")
 	fmt.Println(ctx.config.ConnectionStr)
-	logOutboundIP()
-	db, err := sqlx.Connect("postgres", ctx.config.ConnectionStr)
+
+	dbURL := ctx.config.ConnectionStr
+
+	if ctx.config.TursoToken != "" {
+		dbURL = fmt.Sprintf("%s?authToken=%s", ctx.config.ConnectionStr, ctx.config.TursoToken)
+	}
+
+	db, err := sqlx.Connect("libsql", dbURL)
 	if err != nil {
 		return nil, err
 	}
+
 	ctx.db = db
 
-	err = db.Ping()
-	if err != nil {
-		log.Fatalf("Cannot reach the database: %v", err)
+	if err := db.Ping(); err != nil {
+		return nil, fmt.Errorf("cannot reach the database: %w", err)
 	}
-	fmt.Println("✅ Successfully connected to PostgreSQL!")
+
+	if _, err := db.Exec("PRAGMA foreign_keys = ON;"); err != nil {
+		return nil, fmt.Errorf("could not enable foreign keys: %w", err)
+	}
+
+	fmt.Println("✅ Successfully connected to Turso/libSQL!")
 
 	e := echo.New()
 	e.Debug = true

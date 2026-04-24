@@ -60,7 +60,7 @@ func (s *Store) CreateBarberUser(cbur CreateBarberUserRequest) error {
 	}
 	defer stmt.Close()
 
-	now := time.Now()
+	now := time.Now().UTC()
 
 	params := map[string]any{
 		"id":              cbur.Id,
