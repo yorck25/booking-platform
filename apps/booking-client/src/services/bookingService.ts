@@ -1,17 +1,46 @@
 import { Config } from "../lib/config";
 import { NetworkAdapter, NewDefaultHeader } from "../lib/networkAdapter";
 import {type IReservationSlot} from "../models/barber";
+import { useSearchParams } from "react-router-dom";
 
 class CBookingService {
-    public BarberId = "11111111-1111-1111-1111-111111111111";
+    private BarberId = "";
     private BASE_URL = Config.BookingServiceBaseUrl;
+    private readonly BARBER_ID_STORAGE_KEY = "barberId";
 
     setBarberId(id: string) {
         this.BarberId = id;
+        sessionStorage.setItem(this.BARBER_ID_STORAGE_KEY, id);
     }
 
     getBarberId(): string {
-        return this.BarberId;
+        if (this.BarberId) {
+            return this.BarberId;
+        }
+
+        const idFromUrl = this.getBarberIdFromUrl();
+
+        if (idFromUrl) {
+            this.setBarberId(idFromUrl);
+            return idFromUrl;
+        }
+
+        const idFromSession = sessionStorage.getItem(this.BARBER_ID_STORAGE_KEY);
+
+        if (idFromSession) {
+            this.BarberId = idFromSession;
+            return idFromSession;
+        }
+
+        console.error("No BarberId provided");
+        return "";
+    }
+
+    private getBarberIdFromUrl(): string {
+        const searchParams = new URLSearchParams(window.location.search);
+        const barberId = searchParams.get("barberId");
+
+        return barberId || "";
     }
 
     // -----------------

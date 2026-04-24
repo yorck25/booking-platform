@@ -12,7 +12,15 @@ export const ServicePage = () => {
     const [note, setNote] = useState<string>("");
 
     useEffect(() => {
-        BookingService.loadAvailableService("11111111-1111-1111-1111-111111111111");
+        const id = BookingService.getBarberId();
+
+        if(id === "") {
+            alert("Problem while loading barber details. Please close the site and reopen it agian");
+            return;
+        }
+
+
+        BookingService.loadAvailableService(id);
     }, []);
 
     const groupedServices = useMemo(() => {
