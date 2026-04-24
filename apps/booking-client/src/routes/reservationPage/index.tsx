@@ -1,20 +1,55 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { Select } from "../../components/select";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import styles from "./style.module.scss";
 import { Divider } from "../../components/divider";
+import { BookingService } from "../../services/booking-service";
+
+export interface IReservationSlot {
+    startTime: string;
+    endTime: string;
+    isBooked: boolean;
+}
 
 export const ReservationPage = () => {
-    const times = [
-        "09:00",
-        "09:30",
-        "10:00",
-        "10:30",
-    ];
+    const [date, setDate] = useState<Date | null>(new Date());
+    const [slots, setSlots] = useState<IReservationSlot[]>([]);
+    const [time, setTime] = useState("");
 
-    const [date, setDate] = useState<Date | null>(null);
-    const [time, setTime] = useState(times[0]);
+    const loadBookingSlots = async (date: Date) => {
+        try {
+            const reservationSlots = await BookingService.loadBarberAvailability(date);
+
+            setSlots(reservationSlots);
+
+            const firstAvailableSlot = reservationSlots.find(slot => !slot.isBooked);
+
+            if (firstAvailableSlot) {
+                setTime(firstAvailableSlot.startTime);
+            } else {
+                setTime("");
+            }
+        } catch (error) {
+            console.error("Failed to load booking slots", error);
+            setSlots([]);
+            setTime("");
+        }
+    };
+
+    useEffect(() => {
+        loadBookingSlots(new Date());
+    }, []);
+
+    const handleDateChange = (selectedDates: Date[]) => {
+        const selectedDate = selectedDates.length > 0 ? selectedDates[0] : null;
+
+        setDate(selectedDate);
+
+        if (selectedDate) {
+            loadBookingSlots(selectedDate);
+        }
+    };
 
     const handleTimeInput = (e: Event) => {
         const target = e.target as HTMLSelectElement;
@@ -22,14 +57,21 @@ export const ReservationPage = () => {
     };
 
     const getTimeOptions = () => {
-        return times.map((t) => ({
-            value: t,
-            label: t,
-        }));
+        return slots
+            .filter(slot => !slot.isBooked)
+            .map(slot => ({
+                value: slot.startTime,
+                label: slot.startTime,
+            }));
     };
 
     const handleSubmit = (e: Event) => {
         e.preventDefault();
+
+        console.log({
+            date,
+            time,
+        });
     };
 
     return (
@@ -48,9 +90,7 @@ export const ReservationPage = () => {
 
                         <Flatpickr
                             value={date || undefined}
-                            onChange={(selectedDates) => {
-                                setDate(selectedDates.length > 0 ? selectedDates[0] : null);
-                            }}
+                            onChange={handleDateChange}
                             options={{
                                 dateFormat: "d-m-Y",
                                 allowInput: false,
@@ -63,7 +103,7 @@ export const ReservationPage = () => {
                         id="time"
                         label="Uhrzeit"
                         value={time}
-                        placeholder=""
+                        placeholder="Uhrzeit wählen"
                         handleChange={handleTimeInput}
                         options={getTimeOptions()}
                     />
@@ -72,18 +112,22 @@ export const ReservationPage = () => {
                 <Divider />
 
                 <div className={styles.suggestion_group}>
-                    <div className={styles.suggestion_cell}><p>08:30</p></div>
-                    <div className={styles.suggestion_cell}><p>09:00</p></div>
-                    <div className={styles.suggestion_cell}><p>09:30</p></div>
-                    <div className={styles.suggestion_cell}><p>10:00</p></div>
-                    <div className={styles.suggestion_cell}><p>10:30</p></div>
-                    <div className={styles.suggestion_cell}><p>11:00</p></div>
-                    <div className={styles.suggestion_cell}><p>11:30</p></div>
-                    <div className={styles.suggestion_cell}><p>12:00</p></div>
+                    {slots
+                        .filter(slot => !slot.isBooked)
+                        .map(slot => (
+                            <button
+                                key={slot.startTime}
+                                type="button"
+                                className={styles.suggestion_cell}
+                                onClick={() => setTime(slot.startTime)}
+                            >
+                                <p>{slot.startTime}</p>
+                            </button>
+                        ))}
                 </div>
 
                 <div className={styles.footer_button_wrapper}>
-                    <button className={styles.button} type="submit">
+                    <button className={styles.button} type="submit" disabled={!time}>
                         Weiter
                     </button>
                 </div>
